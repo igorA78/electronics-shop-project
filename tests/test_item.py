@@ -24,3 +24,8 @@ def test_string_to_number(instance_item):
     assert instance_item.string_to_number('123') == 123
     assert instance_item.string_to_number('123.1') == 123
 
+def test_repr(instance_item):
+    assert instance_item.__repr__() == "Item('Смартфон', 10000, 20)"
+
+def test_str(instance_item):
+    assert instance_item.__str__() == 'Смартфон'
