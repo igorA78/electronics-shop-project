@@ -56,18 +56,22 @@ class Item:
         self.__name = name if len(name) <= 10 else 'Exception: Длина наименования товара превышает 10 символов.'
 
     @classmethod
-    def instantiate_from_csv(cls) -> None:
-        Item.all.clear()
+    def instantiate_from_csv(cls, path=r"../src/items.csv"):
+        """
+        Инициализирует экземпляры класса `Item` данными из файла _src/items.csv
+        """
+
         try:
-            with open('../src/items.csv', 'r') as file:
-                items = csv.DictReader(file)
-                for row in items:
-                    try:
-                        cls(row['name'], row['price'], row['quantity'])
-                    except Exception:
-                        raise InstantiateCSVError
+            with open(path, newline='') as file:
+                reader = csv.DictReader(file)
+                cls.all.clear()
+                try:
+                    for row in reader:
+                        item = (cls(row['name'], row['price'], row['quantity']))
+                except KeyError:
+                    raise InstantiateCSVError('Файл items.csv поврежден')
         except FileNotFoundError:
-            raise FileNotFoundError('Отсутствует файл "items.csv"')
+            raise FileNotFoundError('Отсутствует файл items.csv')
 
     @staticmethod
     def string_to_number(number: str) -> int:

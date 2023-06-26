@@ -38,3 +38,10 @@ def test_add_item(instance_item, instance_phone):
     assert instance_item.quantity + instance_phone.quantity == 25
     with pytest.raises(TypeError):
         instance_item + 2
+
+
+
+def test_instantiate_from_csv():
+
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(path="нет такого файла")
